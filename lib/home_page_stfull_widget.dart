@@ -1,5 +1,5 @@
 
-// НЕ ПОЛУЧИЛОСЬ
+// НЕ ПОЛУЧИЛОСЬ, меняется 1 раз на FirstContainer и после этого не меняется
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -14,6 +14,18 @@ class HomePageStatefullWidget extends StatefulWidget {
 }
 
 class _HomePageStatefullWidgetState extends State<HomePageStatefullWidget> {
+  Widget currentContainer = NewContainer();
+
+  void changeContainer() {
+    setState(() {
+      currentContainer==NewContainer() ? currentContainer = FirstContainer() : currentContainer = NewContainer();
+      // if(currentContainer == FirstContainer()) {
+      //   currentContainer = NewContainer();
+      // } else {currentContainer = FirstContainer();}
+    });
+print('$currentContainer');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,42 +41,31 @@ class _HomePageStatefullWidgetState extends State<HomePageStatefullWidget> {
         ),
         centerTitle: true,
       ),
-      body: FirstContainer(),
+      body: Center(child: InkWell(
+          onTap: changeContainer,
+          child: currentContainer),),
     );
   }
 }
 
-class FirstContainer extends StatefulWidget {
+
+class FirstContainer extends StatelessWidget {
   const FirstContainer({super.key});
 
   @override
-  State<FirstContainer> createState() => _FirstContainerState();
-}
-
-class _FirstContainerState extends State<FirstContainer> {
-  @override
   Widget build(BuildContext context) {
-    return Center(
-      child: InkWell(
-        onTap: () {
-setState(() {
-  changeContainer();
-});
-        },
-        child: Container(
-          width: 400,
-          height: 400,
-          decoration: BoxDecoration(
-            color: Colors.blue.shade800,
-          ),
-          child: Center(
-            child: Text(
-              'Click me!!!',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 60,
-              ),
-            ),
+    return Container(
+      width: 300,
+      height: 300,
+      decoration: BoxDecoration(
+        color: Colors.blue.shade800,
+      ),
+      child: Center(
+        child: Text(
+          'Click me!!!',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 60,
           ),
         ),
       ),
@@ -73,44 +74,28 @@ setState(() {
 }
 
 
-class NewContainer extends StatefulWidget {
+class NewContainer extends StatelessWidget {
   const NewContainer({super.key});
 
   @override
-  State<NewContainer> createState() => _NewContainerState();
-}
-
-class _NewContainerState extends State<NewContainer> {
-  @override
   Widget build(BuildContext context) {
-    return Center(
-      child: InkWell(
-        onTap: (){
-          setState(() {
-            changeContainerToFirst();
-          });
-
-        },
-        child: Container(
-
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              borderRadius: BorderRadius.circular(50),
-              gradient: LinearGradient(
-                  colors: [Colors.white60, Colors.indigo.shade800],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight)),
-        ),
-      ),
+    return Container(
+      width: 300,
+      height: 300,
+      decoration: BoxDecoration(
+        //shape: BoxShape.circle,
+        //borderRadius: BorderRadius.circular(50),
+        color: Colors.red,),
+      // gradient: LinearGradient(
+      //     colors: [Colors.white60, Colors.indigo.shade800],
+      //     begin: Alignment.topLeft,
+      //     end: Alignment.bottomRight)),
     );
   }
 }
 
-Widget changeContainer() {
-  return NewContainer();
-}
-Widget changeContainerToFirst() {
-  return FirstContainer();
-}
+
+
+
 
 
